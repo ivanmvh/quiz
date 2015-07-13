@@ -16,3 +16,8 @@ exports.answer = function(req,res) {
 	 	res.render('quizes/answer', {respuesta: "< " + req.query.respuesta + ' > es una respuesta Incorrecta...Baahh'});
 	 }
 };
+
+// GET /autor
+exports.autor = function(req,res) {
+	 res.render('autor');
+};
