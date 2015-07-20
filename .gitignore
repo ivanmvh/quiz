@@ -19,8 +19,8 @@ coverage
 # node-waf configuration
 .lock-wscript
 
-# parece que no se debe excluir para aqlite
-#env 
+# parece que no se debe excluir para sqlite
+env 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
