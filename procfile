@@ -1,2 +1,2 @@
 web: node ./bin/www
-//web: node prupg.js
+#web: node prupg.js

@@ -20,8 +20,7 @@ JSON.stringify(o, function(key, value) {
 // Postgres DATABASE_URL = postgres://user:passwd@host:port/database
 // SQLite   DATABASE_URL = sqlite://:@:/
 console.log(process.env.DATABASE_URL);
-//var url = process.env.DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
-var url = process.env.DATABASE_URL;
+var url = process.env.DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
 var DB_name  = (url[6]||null);
 var user     = (url[2]||null);
 var pwd      = (url[3]||null);
@@ -51,16 +50,16 @@ var sequelize = new Sequelize(DB_name, user, pwd,
     protocol: protocol,
     port:     port,
     host:     host,
-    //storage:  storage,  // solo SQLite (.env)
+    storage:  storage,  // solo SQLite (.env)
     omitNull: true      // solo Postgres
   }      
 );
-console.log("____36 JSONCIRC sequelize->"+JSONCIRC(sequelize));
+//console.log("____36 JSONCIRC sequelize->"+JSONCIRC(sequelize));
 // Importar definicion de la tabla Quiz
 var quiz_path = path.join(__dirname,'models','quiz');
-console.log( " quiz_path-> " + quiz_path);
+//console.log( " quiz_path-> " + quiz_path);
 var Quiz = sequelize.import(quiz_path);
-console.log("____40 JSONCIRC Quiz->"+JSONCIRC(Quiz));
+//console.log("____40 JSONCIRC Quiz->"+JSONCIRC(Quiz));
 exports.Quiz = Quiz; // exportar definición de tabla Quiz
 console.log("____42")
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
