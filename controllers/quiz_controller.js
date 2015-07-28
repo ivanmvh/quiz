@@ -33,14 +33,14 @@ exports.index = function(req, res)
       { console.log("--->>>  si hay req.query.search ="+ wtrim);
         models.Quiz.findAll({where: ["pregunta  ilike ?", ('%'+wtrim+'%').replace(/\s+/g,'%')]}).then
         (function(quizes) 
-          {res.render('quizes/index.ejs', { quizes: quizes});}
+          {res.render('quizes/index.ejs', { quizes: quizes, errors: []});}
         ).catch(function(error) {next(error);})
       }
     else
       { console.log("--->>>  no hay req.query.search ="+ req.query.search);
         models.Quiz.findAll().then
         (function(quizes) 
-        {res.render('quizes/index.ejs', { quizes: quizes});}
+        {res.render('quizes/index.ejs', { quizes: quizes, errors: []});}
         ).catch(function(error) {next(error);})
       };    
   };
@@ -48,7 +48,7 @@ exports.index = function(req, res)
 // GET /quizes/:id
 // @im - muestra datos de registro solicitado por id y espera respuesta
 exports.show = function(req, res) 
-  {res.render('quizes/show', { quiz: req.quiz});};
+  {res.render('quizes/show', { quiz: req.quiz , errors: []});};
 
 // GET /quizes/:id/answer
 // @im - procesa respuesta 
@@ -62,7 +62,7 @@ exports.answer = function(req, res)
     if  ((req.query.respuesta).toUpperCase().trim() === (req.quiz.respuesta).toUpperCase().trim()) 
         {resultado= "< " + req.query.respuesta + '> es una respuesta Correcta !! Hurra !!'; }
     
-    res.render('quizes/answer', { quiz : req.quiz ,respuesta: resultado });
+    res.render('quizes/answer', { quiz : req.quiz ,respuesta: resultado , errors: [] });
   };
 
 // GET /quizes/new
@@ -71,9 +71,9 @@ exports.answer = function(req, res)
 exports.new = function(req, res) 
 {
   var quiz = models.Quiz.build
-  ({pregunta: "Pregunta", respuesta: "Respuesta"});
+  ({pregunta: " ", respuesta: " "});
 
-  res.render('quizes/new', { quiz: quiz});
+  res.render('quizes/new', { quiz: quiz , errors: []});
 };
 
 // POST /quizes/create
@@ -83,9 +83,18 @@ exports.create = function(req, res)
   {
     var quiz = models.Quiz.build (req.body.quiz);
 
-    // guarda en BD los campos pregunta y respuesta de quiz
-    quiz.save({fields: ["pregunta", "respuesta"]}).then(function()
-        {res.redirect('/quizes');})
+    quiz.validate()
+      .then (
+        function(err){
+          if (err) {
+            res.render('quizes/new', {quiz: quiz, errors: err.errors});  
+          } else {
+              // guarda en BD los campos pregunta y respuesta de quiz
+              quiz.save({fields: ["pregunta", "respuesta"]}).then(function()
+              {res.redirect('/quizes')})
+          }
+        }   
+      );
   }; 
 
 // GET /autor
