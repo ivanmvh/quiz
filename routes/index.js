@@ -11,9 +11,16 @@ router.get('/', function(req, res) {
 router.param('quizId', quizController.load);
 
 // Definicion de rutas de /quizes
+// Pagina de Inicio, Menu de Inicio
 router.get('/quizes'              		   , quizController.index); 
+
 router.get('/quizes/:quizId(\\d+)'         , quizController.show); 
 router.get('/quizes/:quizId(\\d+)/answer'  , quizController.answer);
+
+// Creacion de Nuevo 
+router.get('/quizes/new'              	   , quizController.new); 
+router.post('/quizes/create'       		   , quizController.create); 
+
 router.get('/autor'               		   , quizController.autor);
 
 module.exports = router;

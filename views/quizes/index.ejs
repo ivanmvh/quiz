@@ -1,11 +1,13 @@
  <table>
+  		<tr><td> Lista de Preguntas </td></tr>
   		<% var i; for (i=0; i < quizes.length; i++) { %>        
-     	<tr><td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td></tr> 
+     	<tr><td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td></tr> 
   		<% } %>
  </table>
+ <a href="/quizes/new"><button type="button">Crear pregunta</button></a>
  
  <form method="get" action="/quizes">
-	Ayuda para la Búsqueda: Puede indicar parte de las palabrasa  a buscar separando cada palabra por  espacio(s) en Mayusculas o Minisculas (No importa), por ejemplo : CAP VE o Cap V o C V buscaria Capital Venezuela. <p>
+	<h3> Ayuda para la Búsqueda: Puede indicar parte de las palabrasa  a buscar separando cada palabra por  espacio(s) en Mayusculas o Minisculas (No importa), por ejemplo : CAP VE o Cap V o C V buscaria Capital Venezuela. </h3> <p>
 	Cadena a Buscar <p>
 	<input type="text" name="search" value="            "/>
 	<input type="submit" value="Iniciar Busqueda">

@@ -1,5 +1,5 @@
 var path = require('path');
-
+// @im - obtiene parametros de base de datos a usar de archivo .env
 // Postgres DATABASE_URL = postgres://user:passwd@host:port/database
 // SQLite   DATABASE_URL = sqlite://:@:/
 console.log(process.env.DATABASE_URL);
@@ -25,6 +25,7 @@ console.log('--->> storage->' + storage     );
 // Cargar Modelo ORM
 var Sequelize = require('sequelize');
 
+// @im - Se accesara mediante el ORM Sequalize
 // Usar BBDD SQLite o Postgres
 var sequelize = new Sequelize(DB_name, user, pwd, 
   { dialect:  protocol,
@@ -32,7 +33,10 @@ var sequelize = new Sequelize(DB_name, user, pwd,
     port:     port,
     host:     host,
     storage:  storage,  // solo SQLite (.env)
-    omitNull: true      // solo Postgres
+    omitNull: true,      // solo Postgres
+    dialectOptions: {
+        ssl: (host === 'localhost') ? false : true // @im - lo puse a ver si arranca bien foreman co base pg en heroku (àrece que no arreglo problema)
+    }
   }      
 );
 console.log("____>>> 36")
@@ -49,11 +53,13 @@ sequelize.sync().then(function() {
   Quiz.count().then(function (count){
     if(count === 0) {   // la tabla se inicializa solo si está vacía
       console.log("--->>> Base Vacia se llena");
+      var iddb=process.env.DATABASE_URL.substring(0, 20);
       Quiz.bulkCreate( 
-        [ {pregunta: 'Capital de Italia',   respuesta: 'Roma'},
+        [ {pregunta: 'Capital de Italia '+ iddb,   respuesta: 'Roma'},
           {pregunta: 'Capital de Portugal', respuesta: 'Lisboa'},
           {pregunta: 'Capital de Colombia', respuesta: 'Bogota'},
-          {pregunta: 'Capital de Venezuela', respuesta: 'Caracas'}
+          {pregunta: 'Capital de Venezuela', respuesta: 'Caracas'},
+          {pregunta: 'Capital de Peru', respuesta: 'Lima'}
         ])    
       .then(Quiz.count().then (function(count){
           console.log('--->> Base de datos inicializada con '+count +" registros.");
