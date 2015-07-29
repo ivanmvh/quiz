@@ -118,6 +118,13 @@ exports.update = function(req, res)
   }; 
 
 
+// DELETE /quizes/:id   - borrar registro de la BD
+exports.destroy = function(req, res) 
+  {req.quiz.destroy()
+      .then (function(){res.redirect('/quizes');})
+      .catch(function(error) {next(error);});
+   };   
+
 // GET /autor
 // @im - despliegue informacion estatica
 exports.autor = function(req,res) {
