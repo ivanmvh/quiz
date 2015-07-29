@@ -19,13 +19,7 @@ exports.load = function(req,res,next,quizId)
 // GET /quizes
 // @im - lista filtrada o total
 exports.index = function(req, res) 
-  { console.log("--->>>  quiz_controller index 5");
-    //console.log("--->>>  req.query.search.length ="+ req.query.search.length);
-    console.log("--->>>  req.query.search ="+ req.query.search);
-    // var wtemp=req.query.search.trim();
-
-    var wtemp=req.query.search || ' ';
-    console.log("--->>> wtemp===null --->>> "+ wtemp===null) ;
+  { var wtemp=req.query.search || ' ';
     var wtrim = (" " + wtemp).trim();
     var wlen = wtrim.length;
 
@@ -96,6 +90,33 @@ exports.create = function(req, res)
         }   
       );
   }; 
+
+// Modificacion, Edicion - Muestra Registro a Editar GET quizes/:id/edit
+// El Autoload se encarga de accesar antes el registo a modificar
+exports.edit = function(req, res) 
+  { var quiz = req.quiz; // el req.quiz lo crea el autoload
+    res.render('quizes/edit', {quiz:quiz, errors: []});
+  };  
+
+// PUT /quizes/:id - Update - Actualizar
+exports.update = function(req, res) 
+  {
+    req.quiz.pregunta = req.body.quiz.pregunta;
+    req.quiz.respuesta = req.body.quiz.respuesta;
+    req.quiz.validate()
+      .then (
+        function(err){
+          if (err) {
+            res.render('quizes/edit', {quiz: req.quiz, errors: err.errors});  
+          } else {
+              // guarda en BD los campos pregunta y respuesta de quiz
+              req.quiz.save({fields: ["pregunta", "respuesta"]}).then(function()
+              {res.redirect('/quizes')})
+          }
+        }   
+      );
+  }; 
+
 
 // GET /autor
 // @im - despliegue informacion estatica
