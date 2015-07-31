@@ -65,7 +65,7 @@ exports.answer = function(req, res)
 exports.new = function(req, res) 
 {
   var quiz = models.Quiz.build
-  ({pregunta: "P r e g u n t a", respuesta: "R e s p u e s t a ", tema: "T e m a "});
+  ({pregunta: "Pregunta", respuesta: "Respuesta", tema: " "});
 
   res.render('quizes/new', { quiz: quiz , errors: []});
 };

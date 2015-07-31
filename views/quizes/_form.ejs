@@ -1,8 +1,18 @@
 <label for="preg" class="rem">Pregunta:</label>
-<input type="text" id="preg" name="quiz[pregunta]" placeholder="<%= quiz.pregunta %>"/> 
+<input type="text" id="preg" name="quiz[pregunta]" placeholder="<%= quiz.pregunta %>" value =
+    <% if (quiz.pregunta == 'Pregunta') {%>
+        ""
+    <% } else { %>
+        "<%= quiz.pregunta %>"
+    <% } %>/> 
 <p>
 <label for="resp" class="rem">Respuesta:</label>
-<input type="text" id="resp" name="quiz[respuesta]" placeholder="<%= quiz.respuesta %>"/>
+<input type="text" id="resp" name="quiz[respuesta]" placeholder="<%= quiz.respuesta %>" value =
+    <% if (quiz.respuesta == 'Respuesta') {%>
+        ""
+    <% } else { %>
+        "<%= quiz.respuesta %>"
+    <% } %>/>
 <p>
 <label for="ltema" class="rem">Tema Actual:</label>
 <label id="ltema" class="rem"><%= quiz.tema %></label>
