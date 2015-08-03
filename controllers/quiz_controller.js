@@ -4,7 +4,15 @@ var models = require('../models/models.js');
 // Autoload - factoriza el código si la ruta incluye :quizId
 // @im - busqueda por id generica y anticipada ?
 exports.load = function(req,res,next,quizId)
-{models.Quiz.findById(quizId).then 
+// {models.Quiz.findById(quizId){include: [{ models.Comment}]}.then 
+   {models.Quiz.find({
+            where: {
+                id: Number(quizId)
+            },
+            include: [{
+                model: models.Comment
+            }]
+        }).then
   (function(quiz)
     {
       if (quiz) 
@@ -129,5 +137,5 @@ exports.destroy = function(req, res)
 // GET /autor
 // @im - despliegue informacion estatica
 exports.autor = function(req,res) {
-   res.render('autor');
+   res.render('autor' ,{ errors: []});
 };
