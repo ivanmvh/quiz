@@ -33,14 +33,14 @@ exports.index = function(req, res)
 
     if (wlen  > 0 )
       { console.log("--->>>  si hay req.query.search ="+ wtrim);
-        models.Quiz.findAll({where: ["pregunta  ilike ?", ('%'+wtrim+'%').replace(/\s+/g,'%')]}).then
+        models.Quiz.findAll({where: ["pregunta  ilike ?", ('%'+wtrim+'%').replace(/\s+/g,'%')], order: 'pregunta'}).then
         (function(quizes) 
           {res.render('quizes/index.ejs', { quizes: quizes, errors: []});}
         ).catch(function(error) {next(error);})
       }
     else
       { console.log("--->>>  no hay req.query.search ="+ req.query.search);
-        models.Quiz.findAll().then
+        models.Quiz.findAll({order: 'pregunta'}).then
         (function(quizes) 
         {res.render('quizes/index.ejs', { quizes: quizes, errors: []});}
         ).catch(function(error) {next(error);})

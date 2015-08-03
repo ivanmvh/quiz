@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
+var session = require('express-session');
+
 var routes = require('./routes/index');
 
 //var users = require('./routes/users');
@@ -23,9 +25,40 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+app.use(cookieParser('Quiz-ivanmvh'));
 app.use(methodOverride('_method'));
+app.use(session());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Helpers dinamicos:
+app.use(function(req, res, next) {
+
+  // si no existe lo inicializa
+  if (!req.session.redir) {
+    req.session.redir = '/';
+  }
+  // guardar path en session.redir para despues de login
+  if (!req.path.match(/\/login|\/logout|\/user/)) {
+    req.session.redir = req.path;
+  }
+
+  // Hacer visible req.session en las vistas
+  res.locals.session = req.session;
+  next();
+});
+
+// Helpers dinamicos:
+app.use(function(req, res, next) {
+
+  // guardar path en session.redir para despues de login
+  if (!req.path.match(/\/login|\/logout/)) {
+    req.session.redir = req.path;
+  }
+
+  // Hacer visible req.session en las vistas
+  res.locals.session = req.session;
+  next();
+});
 
 app.use('/', routes);
 //app.use('/users', users);
