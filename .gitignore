@@ -20,7 +20,7 @@ coverage
 .lock-wscript
 
 # parece que no se debe excluir para sqlite
-#.env 
+.env 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 

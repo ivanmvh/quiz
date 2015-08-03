@@ -30,15 +30,15 @@ router.get('/quizes/:quizId(\\d+)'         , quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer'  , quizController.answer);
 
 // Creacion de Nuevo 
-router.get('/quizes/new'              	   , quizController.new); 
-router.post('/quizes/create'       		   , quizController.create); 
+router.get('/quizes/new'              	   ,sessionController.loginRequired, quizController.new); 
+router.post('/quizes/create'       		   ,sessionController.loginRequired, quizController.create); 
 
 // Actualizacion Update
-router.get('/quizes/:quizId(\\d+)/edit'    , quizController.edit); 
-router.put('/quizes/:quizId(\\d+)'         , quizController.update); 
+router.get('/quizes/:quizId(\\d+)/edit'    ,sessionController.loginRequired, quizController.edit); 
+router.put('/quizes/:quizId(\\d+)'         ,sessionController.loginRequired, quizController.update); 
 
 // Borrar Registro
-router.delete('/quizes/:quizId(\\d+)'      , quizController.destroy); 
+router.delete('/quizes/:quizId(\\d+)'      ,sessionController.loginRequired, quizController.destroy); 
 
 // -------------Comments ----------------------------------
 // Nuevo Comment
