@@ -8,5 +8,21 @@
 
 <p><strong>Comentarios:</strong></p>
 <% for(index in quiz.Comments) {%>
-	<p>- <%=quiz.Comments[index].texto %></p>
+	<%if(quiz.Comments[index].publicado || session.user) {%>
+			<%if(session.user){%>
+				<%if (!quiz.Comments[index].publicado) {%>
+					<p>- <font color="red"> <%=quiz.Comments[index].texto %> </font>
+					<a href="/quizes/<%= quiz.id %>/comments/<%=quiz.Comments[index].id%>/publish">
+						<button>Publicar </button></a>
+				<%}else {%>	
+					<p>- <font style="BACKGROUND-COLOR: yellow" color="green"> <%=quiz.Comments[index].texto %> </font>
+					<a href="/quizes/<%= quiz.id %>/comments/<%=quiz.Comments[index].id%>/publish">
+						<button>No Publicar </button></a>
+				<%}%>
+			<%}else {%>		
+				<p>- <font style="BACKGROUND-COLOR: yellow" color="green"> <%=quiz.Comments[index].texto %> </font>
+			<%}%>	
+		</p>
+	<%}%>
 <%}%>	
+
