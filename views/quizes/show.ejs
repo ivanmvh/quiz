@@ -4,8 +4,6 @@
 	<input type="submit" value="Enviar">
 </form>
 
-<p><a href="/quizes/<%= quiz.id %>/comments/new"><button>Nuevo Comentario</button></a></p>
-
 <p><strong>Comentarios:</strong></p>
 <% for(index in quiz.Comments) {%>
 	<%if(quiz.Comments[index].publicado || session.user) {%>
@@ -26,3 +24,4 @@
 	<%}%>
 <%}%>	
 
+<p><a href="/quizes/<%= quiz.id %>/comments/new"><button>Nuevo Comentario</button></a></p>

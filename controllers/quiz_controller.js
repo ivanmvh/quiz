@@ -4,7 +4,7 @@ var models = require('../models/models.js');
 // Autoload - factoriza el código si la ruta incluye :quizId
 // @im - busqueda por id generica y anticipada ?
 exports.load = function(req,res,next,quizId)
-// {models.Quiz.findById(quizId){include: [{ models.Comment, order: 'texto'}]}.then 
+// {models.Quiz.findById(quizId){include: [{ models.Comment}]}.then 
    {models.Quiz.find({
             where: {id: Number(quizId)},
             include: [{model: models.Comment}],
