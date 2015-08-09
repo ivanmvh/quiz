@@ -33,32 +33,34 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Helpers dinamicos:
 app.use(function(req, res, next) {
 
-  // si no existe lo inicializa
-  if (!req.session.redir) {
-    req.session.redir = '/';
-  }
-  // guardar path en session.redir para despues de login
-  if (!req.path.match(/\/login|\/logout|\/user/)) {
-    req.session.redir = req.path;
-  }
-
-  // Hacer visible req.session en las vistas
-  res.locals.session = req.session;
-  next();
-});
-
-// Helpers dinamicos:
-app.use(function(req, res, next) {
-
   // guardar path en session.redir para despues de login
   if (!req.path.match(/\/login|\/logout/)) {
     req.session.redir = req.path;
+    console.log("--->>> req.session.redir: "+req.session.redir);
   }
 
   // Hacer visible req.session en las vistas
   res.locals.session = req.session;
   next();
 });
+
+// Autologout
+app.use( function(req, res, next) {
+  var ahora = new Date().getTime();                           
+  req.session.timeOutSeg = 60 ;
+  if ( req.session.ultimaTransaccion && req.session.user) {   
+      // 1000 es un seg              
+      if ((ahora-req.session.ultimaTransaccion)> req.session.timeOutSeg*1000){
+          delete req.session.user;
+          res.redirect("/login");
+      }
+  }
+  req.session.ultimaTransaccion = ahora;
+  res.locals.session = req.session;
+  next();
+});
+
+
 
 app.use('/', routes);
 //app.use('/users', users);
@@ -95,6 +97,5 @@ app.use(function(err, req, res, next) {
         errors: []
     });
 });
-
 
 module.exports = app;

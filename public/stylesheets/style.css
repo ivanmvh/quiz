@@ -5,8 +5,8 @@ body 		{ font: 16px Georgia, serif; }
 #page-wrap > .main { border: 1px solid #999; padding: 1%; margin-bottom: 1px; color: black;}
 
 section > div {padding:  20px;}
-header, nav, section 	{background: #eee; text-align: center;}
-footer 					{background: #eee; text-align: center;}
+header, nav, section 	{background: #eee; text-align: left;}
+footer 					{background: #eee; text-align: left;}
 nav span 				{margin: 0px 10px 0px 0px; }
 
 #ErrorMsgs				{color: #f61; font-size: smaller }

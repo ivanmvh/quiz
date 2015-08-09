@@ -16,9 +16,10 @@
     <header class="main" id="h1">
   	 
     <%if(!session.user){%>
-      <span class="right"><a href="/login">Login</a></span>
+      <span class="right"><a href="/login">Login</a> &nbsp; (admin/1234)</span>
     <%}else{%>
-      <span class="right"> <%=session.user.username%> <a href="/logout">Logout</a></span>
+      <span class="right"> <%=session.user.username%> <a href="/logout">Logout</a>&nbsp;(logout automatico en
+         <%=session.timeOutSeg%> seg)</span>
     <%}%>
 
      <h2>*** Quiz<span>: el Juego de las Preguntas</span> ***</h2>
