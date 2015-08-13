@@ -1,11 +1,20 @@
  
   	<h1>***Estadisticas****	<p>
-  	-------------------	<p>
+  	---------------------------------------------------------------------</h1>	<p>
   	
   	Hay  <%= kPreg  %> preguntas.<p>
-  	Hay  <%= kComen %> comentarios.<p>
-  	Hay  <%= kComen/kPreg %> comentarios por pregunta en Promedio.<p>
-  	Hay  <%= kPregConCom %> preguntas con comentarios.<p>
-  	Hay  <%= (kPreg - kPregConCom) %> preguntas sin comentarios.<p>
+  	.....Hay  <%= kPregConCom %> preguntas con comentarios.<p>
+  	.....Hay  <%= (kPreg - kPregConCom) %> preguntas sin comentarios.<p>
+  	<p>
 
- 
+  	.....Hay  <%= kPregConComPub   %> preguntas con comentarios publicados.<p>
+  	.....Hay  <%= kPreg - kPregConComPub   %> preguntas sin comentarios publicados.<p>
+  	<p>	
+  	
+  	Hay  <%= kComen %> comentarios.<p>
+  	.....Hay  <%= kComPub  %> comentarios publicados.<p>
+  	.....Hay  <%= kComen - kComPub  %> comentarios sin publicar.<p>
+  	<p>
+  	
+  	Hay  <%= kComen/kPreg %> comentarios por pregunta en Promedio.<p>
+  	

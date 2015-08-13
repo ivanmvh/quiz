@@ -1,5 +1,4 @@
 *			{ margin: 0; padding: 0;}
-body 		{ font: 16px Georgia, serif; }
 
 #page-wrap 	{margin: 2% auto; color: white;}
 #page-wrap > .main { border: 1px solid #999; padding: 1%; margin-bottom: 1px; color: black;}
@@ -13,8 +12,8 @@ nav span 				{margin: 0px 10px 0px 0px; }
 
 .right {float: right;}
 
-a {color: #00B7FF}
+a {color: #008080}
 
 h1 {color: #0000FF;}
 
-h2 {color: #00FF00;}
+h2 {color: #00A000;}

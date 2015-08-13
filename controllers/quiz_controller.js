@@ -145,6 +145,9 @@ exports.estadisticas = function(req, res){
   var kComen=0;
   var comXPreg=0;
   var kPregConCom=0;
+  var kComPub=0;
+  var kComPregPub=0;
+  var kPregConComPub=0;
 
   models.Quiz.count().then( 
     function(kPreg) {
@@ -165,13 +168,24 @@ exports.estadisticas = function(req, res){
                 for (var i in Preguntas) {
                   console.log("id="+Preguntas[i].id);
                   kPregConCom=kPregConCom+1;
+                  Comments=Preguntas[i].Comments;
+                  kComPregPub=0;
+                  for (var j in Comments) {
+                      console.log("Comentarios.id="+Comments[j].id);
+                      if (Comments[j].publicado) {kComPregPub=kComPregPub+1};
+                  }
+                  if (kComPregPub){ 
+                     kComPub=kComPub+kComPregPub;
+                     kPregConComPub=kPregConComPub+1;
+                  }
                 }
                 console.log("2.2. Hay " + kPreg + " preguntas.");  
                 console.log("3.2. Hay " + kComen + " comentarios.");  
                 console.log("5.2. Hay " + kComen/kPreg + " comentarios por pregunta en Promedio.");
                 console.log("6.2. Hay " + kPregConCom + " preguntas con comentarios.");
                 console.log("7.2. Hay " + (kPreg - kPregConCom) + " preguntas sin comentarios.");  
-                res.render('quizes/estadisticas.ejs', { kPreg:kPreg,  kComen:kComen, kPregConCom:kPregConCom, errors: [] } )
+                res.render('quizes/estadisticas.ejs', { kPreg:kPreg,  kComen:kComen, kPregConCom:kPregConCom, kComPub:kComPub,
+                            kPregConComPub:kPregConComPub, errors: [] } )
             }
          )
         }
