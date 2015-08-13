@@ -1,6 +1,6 @@
  <table>
   	<tr>
-  		<td> Lista de Preguntas </td>
+  		<td> Lista de Preguntas (***Estadisticas****) </td>
   		<td>                    </td>
 		<%if(session.user){%>
 			<td><a href="/quizes/new"><button type="button">Crear pregunta</button></a></td>
@@ -8,7 +8,7 @@
   	</tr>
   	<% var i; for (i=0; i < quizes.length; i++) { %>        
     	<tr>
-    		<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].id + "-" + quizes[i].pregunta %></a></td>
+    		<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].id +"-"+quizes[i].pregunta %></a></td>
     		<%if(session.user){%>
     			<td><a href="/quizes/<%= quizes[i].id %>/edit"><button>modificar</button></a></td>
     			<td>		
