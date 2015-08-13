@@ -1,32 +1,11 @@
- <table>
-  	<tr>
-  		<td> Lista de Preguntas (***Estadisticas****) </td>
-  		<td>                    </td>
-		<%if(session.user){%>
-			<td><a href="/quizes/new"><button type="button">Crear pregunta</button></a></td>
-		<% } %>	
-  	</tr>
-  	<% var i; for (i=0; i < quizes.length; i++) { %>        
-    	<tr>
-    		<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].id +"-"+quizes[i].pregunta %></a></td>
-    		<%if(session.user){%>
-    			<td><a href="/quizes/<%= quizes[i].id %>/edit"><button>modificar</button></a></td>
-    			<td>		
-    				<form method="post" action="quizes/<%= quizes[i].id %>?_method=delete">
-						<button type="submit" onClick="return confirm('Borrar: <%= quizes[i].pregunta %>');">
-							borrar
-						</button> 
-					</form>
-				</td>
-			<% } %>
-		</tr>
-	<% } %> 
- </table>
  
+  	<h1>***Estadisticas****	<p>
+  	-------------------	<p>
+  	
+  	Hay  <%= kPreg  %> preguntas.<p>
+  	Hay  <%= kComen %> comentarios.<p>
+  	Hay  <%= kComen/kPreg %> comentarios por pregunta en Promedio.<p>
+  	Hay  <%= kPregConCom %> preguntas con comentarios.<p>
+  	Hay  <%= (kPreg - kPregConCom) %> preguntas sin comentarios.<p>
+
  
- <form method="get" action="/quizes">
-	 Ayuda para la Búsqueda: Puede indicar parte de las palabras a buscar separando cada palabra por espacio(s) en Mayusculas o Minisculas (No importa), por ejemplo : CAP VE o Cap V o C V buscaria Capital Venezuela. </h3> <p>
-	Cadena a Buscar <p>
-	<input type="text" name="search" value="            "/>
-	<input type="submit" value="Iniciar Busqueda">
-</form>

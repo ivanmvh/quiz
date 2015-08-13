@@ -141,37 +141,41 @@ exports.autor = function(req,res) {
 
 // GET /estadisticas
 exports.estadisticas = function(req, res){ 
-      var kPreg=0;
-      var kComen=0;
-      var comXPreg=0;
-      
-      kPreg= models.Quiz.count() ;
-      console.log("1. Hay " + kPreg.count + " preguntas.");
+  var kPreg=0;
+  var kComen=0;
+  var comXPreg=0;
+  var kPregConCom=0;
 
-      models.Quiz.count()
-      .then( 
-        function(kPreg) {
-          console.log("2. Hay " + kPreg + " preguntas.");
+  models.Quiz.count().then( 
+    function(kPreg) {
+      console.log("2. Hay " + kPreg + " preguntas.");
+      models.Comment.count().then( 
+        function(kComen) {
+          console.log("3. Hay " + kComen + " comentarios.");
+          models.Quiz.findAll(
+            {
+              include: [{model: models.Comment , required: true}],
+              order:['Quiz.id'],
+              group:['Quiz.id','Comments.id']
+            }
+          ).then( 
+            function(Preguntas) {
+                console.log("4. JSON.stringify(Preguntas)-->> " + JSON.stringify(Preguntas) );
+                kPregConCom=0;
+                for (var i in Preguntas) {
+                  console.log("id="+Preguntas[i].id);
+                  kPregConCom=kPregConCom+1;
+                }
+                console.log("2.2. Hay " + kPreg + " preguntas.");  
+                console.log("3.2. Hay " + kComen + " comentarios.");  
+                console.log("5.2. Hay " + kComen/kPreg + " comentarios por pregunta en Promedio.");
+                console.log("6.2. Hay " + kPregConCom + " preguntas con comentarios.");
+                console.log("7.2. Hay " + (kPreg - kPregConCom) + " preguntas sin comentarios.");  
+                res.render('quizes/estadisticas.ejs', { kPreg:kPreg,  kComen:kComen, kPregConCom:kPregConCom, errors: [] } )
+            }
+         )
         }
-      ).then( 
-        models.Comment.count().then( 
-          function(kComen) {
-            console.log("3. Hay " + kComen + " comentarios.");
-          }
-      ).then(
-        models.Quiz.findAll({
-          include: [{model: models.Comment , required: true}],
-          order:['Quiz.id'],
-          group:['Quiz.id','Comments.id']
-        }
-      ).then( 
-         function(Preguntas) {
-            console.log("4. JSON.stringify(Preguntas)-->> " + JSON.stringify(Preguntas) );
-         }
-      ).then(
-        console.log("5. Hay " + kPreg + " preguntas......")
-          //comxpreg = kcomen/kpreg;
-          //console.log("Hay en promedio " + comxpreg + "comentarios por pregunta.");
       )
-  };
-
+    }
+  )       
+}; 

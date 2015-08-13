@@ -60,27 +60,34 @@ exports.Comment = Comment; // exportar definición de tabla Comment
 console.log("____>>> 43")
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
-sequelize.sync().then(function() {
-  // success(..) ejecuta el manejador una vez creada la tabla
-  console.log("____>>> 46");
-  Quiz.count().then(function (count){
-    if(count === 0) {   // la tabla se inicializa solo si está vacía
-      console.log("--->>> Base Vacia se llena");
-      var iddb=process.env.DATABASE_URL.substring(0, 20);
-      Quiz.bulkCreate( 
-        [ {pregunta: 'Capital de Italia '+ iddb,   respuesta: 'Roma'},
-          {pregunta: 'Capital de Portugal', respuesta: 'Lisboa'},
-          {pregunta: 'Capital de Colombia', respuesta: 'Bogota'},
-          {pregunta: 'Capital de Venezuela', respuesta: 'Caracas'},
-          {pregunta: 'Capital de Peru', respuesta: 'Lima'}
-        ])    
-      .then(Quiz.count().then (function(count){
-          console.log('--->> Base de datos inicializada con '+count +" registros.");
-          console.log('--->>'+ Quiz)
-        }));
-    } else {console.log('--->> Base de datos ya tiene Registros--> ' + count);
-            console.log('--->>'+ Quiz)
-    };
-  });
-});
+sequelize.sync().then(
+  function() {
+    // success(..) ejecuta el manejador una vez creada la tabla
+    console.log("____>>> 46");
+    Quiz.count().then(
+      function (count){
+        if(count === 0) {   // la tabla se inicializa solo si está vacía
+          console.log("--->>> Base Vacia se llena");
+          var iddb=process.env.DATABASE_URL.substring(0, 20);
+          Quiz.bulkCreate( 
+            [ {pregunta: 'Capital de Italia '+ iddb,   respuesta: 'Roma'},
+              {pregunta: 'Capital de Portugal', respuesta: 'Lisboa'},
+              {pregunta: 'Capital de Colombia', respuesta: 'Bogota'},
+              {pregunta: 'Capital de Venezuela', respuesta: 'Caracas'},
+              {pregunta: 'Capital de Peru', respuesta: 'Lima'}
+            ]
+          ).then(
+              Quiz.count().then (
+                function(count){
+                  console.log('--->> Base de datos Quiz inicializada con '+count +" registros.")
+                }
+              )
+            );
+        } else {
+            console.log('--->> Base de datos Quiz ya tiene Registros--> ' + count)
+          };
+      }
+    );
+  }
+);
 console.log("____>>> 57 fin models.js")
