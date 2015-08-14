@@ -52,6 +52,8 @@ router.get ('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',
 // Consulta Estadisticas
 router.get('/estadisticas'               		             , quizController.estadisticas);
 
+router.get('/estadisticas2'               		             , quizController.estadisticas2);
+
 // Pagina de Creditos / Autor
 router.get('/autor'               		             , quizController.autor);
 

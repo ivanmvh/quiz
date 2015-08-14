@@ -1,0 +1,20 @@
+ 
+  	<h1>***Estadisticas (Solo usando count) ****	<p>
+  	---------------------------------------------------------------------</h1>	<p>
+  	
+  	Hay  <%= aKEsta.kPreg  %> preguntas.<p>
+  	.....Hay  <%= aKEsta.kPregConCom %> preguntas con comentarios.<p>
+  	.....Hay  <%= (aKEsta.kPreg - aKEsta.kPregConCom) %> preguntas sin comentarios.<p>
+  	<p>
+
+  	.....Hay  <%= aKEsta.kPregConComPub   %> preguntas con comentarios publicados.<p>
+  	.....Hay  <%= aKEsta.kPreg - aKEsta.kPregConComPub   %> preguntas sin comentarios publicados.<p>
+  	<p>	
+  	
+  	Hay  <%= aKEsta.kComen %> comentarios.<p>
+  	.....Hay  <%= aKEsta.kComPub  %> comentarios publicados.<p>
+  	.....Hay  <%= aKEsta.kComen - aKEsta.kComPub  %> comentarios sin publicar.<p>
+  	<p>
+  	
+  	Hay  <%= aKEsta.kComen/aKEsta.kPreg %> comentarios por pregunta en Promedio.<p>
+  	

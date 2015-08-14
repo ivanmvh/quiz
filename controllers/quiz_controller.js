@@ -193,3 +193,75 @@ exports.estadisticas = function(req, res){
     }
   )       
 }; 
+
+
+// GET /estadisticas2
+exports.estadisticas2 = function(req, res){ 
+  var aKEsta={
+    kPreg : 0,
+    kComen: 0,
+    comXPreg: 0,
+    kPregConCom:0,
+    kComPub: 0,
+    kComPregPub: 0,
+    kPregConComPub:0
+  };
+
+  models.Quiz.count().then( 
+    function(k) {
+      aKEsta.kPreg=k;
+      console.log("2. Hay " + aKEsta.kPreg + " preguntas.");
+      models.Comment.count().then( 
+        function(k) {
+          aKEsta.kComen=k;
+          console.log("3. Hay " + aKEsta.kComen + " comentarios.");
+          
+          models.Comment.count(
+            {
+              order:['QuizId'],
+              group:['QuizId']
+            }
+
+          ).then( 
+            function(k) {
+              console.log("4. k-->> " + JSON.stringify(k) );
+              console.log("--->>> Object.keys(k).length: "+ Object.keys(k).length);
+              aKEsta.kPregConCom=Object.keys(k).length;
+              
+              models.Comment.count(
+                {
+                  where:{publicado : true}
+                }
+              ).then(
+                function(k) {
+                  aKEsta.kComPub=k;
+
+                  models.Comment.count(
+                  {
+                    order:['QuizId'],
+                    group:['QuizId'],
+                    where:{publicado : true}
+                  }
+
+                ).then(  
+                  function(k) {
+                    console.log("5. k-->> " + JSON.stringify(k) );
+                    console.log("--->>> Object.keys(k).length: "+ Object.keys(k).length);     
+                    aKEsta.kPregConComPub=Object.keys(k).length;                 
+                    console.log("2.2. Hay " + aKEsta.kPreg + " preguntas.");  
+                    console.log("3.2. Hay " + aKEsta.kComen + " comentarios.");  
+                    console.log("5.2. Hay " + aKEsta.kComen/aKEsta.kPreg + " comentarios por pregunta en Promedio.");
+                    console.log("6.2. Hay " + aKEsta.kPregConCom + " preguntas con comentarios.");
+                    console.log("7.2. Hay " + (aKEsta.kPreg - aKEsta.kPregConCom) + " preguntas sin comentarios.");  
+                    res.render('quizes/estadisticas2.ejs', { aKEsta: aKEsta, errors: [] } )
+                  }
+                 ) 
+                }
+              )  
+            }  
+         )
+        }
+      )
+    }
+  )       
+}; 
