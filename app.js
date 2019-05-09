@@ -1,3 +1,4 @@
+// Proyecto desarrollado en curso de Miriadax por Ivan Martinez
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
